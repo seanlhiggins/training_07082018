@@ -60,10 +60,49 @@ view: users {
     type: number
     sql: DATEDIFF(day, ${created_date}, current_date) ;;
   }
+  parameter: test {
+    type: unquoted
+
+  }
 
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
+    action: {
+      label: "Send Campaign Test"
+      url: "https://example.com/posts"
+      param: {
+        name: "some_auth_code"
+        value: "{{test._parameter_value}}"
+      }
+      form_param: {
+        name: "title"
+        required: yes
+        default: "{{test._parameter_value}}"
+      }
+      form_param: {
+        default: "{{created_date._value}}"
+        name: "body"
+        type: textarea
+        required: yes
+      }
+      form_param: {
+        name: "Type"
+        type: select
+        default: "Campaign"
+        option: {
+          name: "Creative"
+          label: "Creative"
+        }
+        option: {
+          name: "Campaign"
+          label: "Campaign"
+        }
+        option: {
+          name: "Group"
+        }
+      }
+    }
   }
 
   dimension: first_name {

@@ -1,5 +1,7 @@
 view: user_orders_facts {
   derived_table: {
+    distribution: "all"
+    sortkeys: ["user_id"]
     datagroup_trigger: etl_datagroup_2
     sql: SELECT user_id,
       COUNT(id) as lifetime_orders,
